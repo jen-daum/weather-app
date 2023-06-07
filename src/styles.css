@@ -36,9 +36,7 @@ li {
   display: block;
 }
 footer {
-  font-size: small;
-  text-align: center;
-  color: lightgrey;
+  color: black;
   font-size: 11px;
   margin: 20px auto;
 }
@@ -74,6 +72,27 @@ footer {
   font-weight: 300;
   background-color: #ffffff96;
 }
+
+.footer-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 250px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-box > *:first-child {
+  margin-right: 20px;
+}
+
+#github-logo {
+  width: 20px;
+  height: auto;
+}
+
 .main-weather-icon {
   font-size: 60px;
   padding-left: 30px;
