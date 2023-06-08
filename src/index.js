@@ -1,4 +1,5 @@
-const API_KEY = "4c9b53e4f8f5eb00df5915bdca340605";
+const API_URL = "https://api.shecodes.io/weather/v1/";
+const API_KEY = "ot351f8facfc3d0f699be8054cb84374";
 
 //update celsius/fahrenheit value and color depending on choice
 function changeUnitsToFahrenheit(event) {
@@ -57,39 +58,41 @@ function changeCity(event) {
   if (newCity === "Current location") {
     navigator.geolocation.getCurrentPosition(handlePosition);
   } else {
-    let _apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${newCity}&appid=${API_KEY}&&units=metric`;
+    let _apiUrl = `${API_URL}forecast?query=${newCity}&key=${API_KEY}&units=metric`;
     axios.get(_apiUrl).then(updateData);
   }
 }
 
 function handlePosition(position) {
-  let lat = position.coords.latitude;
-  let lon = position.coords.longitude;
+  let lat = position.coordinates.latitude;
+  let lon = position.coordinates.longitude;
   retrieveDatafromApi(lat, lon);
 }
 
 function retrieveDatafromApi(lat, lon) {
-  let _apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&&units=metric`;
+  let _apiUrl = `${API_URL}forecast?lon=${lon}&lat=${lat}&key=${API_KEY}&units=metric`;
   axios.get(_apiUrl).then(updateData);
 }
 
 function updateData(response) {
   //update h1 with city name
   let h1 = document.querySelector("h1");
-  h1.innerHTML = response.data.name;
+  h1.innerHTML = response.data.city;
   //update temperatures
   let mainTemp = document.querySelector("#mainTemp");
   let minTemp = document.querySelector(".min-temp");
   let maxTemp = document.querySelector(".max-temp");
-  mainTemp.innerHTML = Math.round(response.data.main.temp);
-  minTemp.innerHTML = Math.round(response.data.main.temp_min);
-  maxTemp.innerHTML = Math.round(response.data.main.temp_max);
+  mainTemp.innerHTML = Math.round(response.data.daily[1].temperature.day);
+  minTemp.innerHTML = Math.round(response.data.daily[1].temperature.minimum);
+  maxTemp.innerHTML = Math.round(response.data.daily[1].temperature.maximum);
 
   //update humidity and Wind
   let humidity = document.querySelector("#humidity");
   let wind = document.querySelector("#wind");
-  humidity.innerHTML = `${Math.round(response.data.main.humidity)}`;
-  wind.innerHTML = `${Math.round(response.data.wind.speed)}`;
+  humidity.innerHTML = `${Math.round(
+    response.data.daily[1].temperature.humidity
+  )}`;
+  wind.innerHTML = `${Math.round(response.data.daily[1].wind.speed)}`;
 
   //update weather sentence
   let sentenceWeather = document.querySelector(".sentence-weather");
@@ -114,3 +117,12 @@ let colorCelsius = document.querySelector(".units .celsius");
 let colorFahrenheit = document.querySelector(".units .fahrenheit");
 colorCelsius.addEventListener("click", changeUnitsToCelsius);
 colorFahrenheit.addEventListener("click", changeUnitsToFahrenheit);
+
+/* const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+const now = new Date(); // Get the current date and time
+const tomorrow = new Date(now); // create a new Date object with the same value as now (it is temporary)
+tomorrow.setDate(now.getDate() + 1); // Set the date to tomorrow
+
+const tomorrowIndex = tomorrow.getDay(); // Get the day index (0-6) for tomorrow which should say 4
+const day = days[tomorrowIndex]; // Retrieve the corresponding day from the `days` array, 4 in the Array is Friday */
