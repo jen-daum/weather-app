@@ -48,17 +48,21 @@ function capitaliseFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function changeCity(event) {
+function fetchCity(event) {
   event.preventDefault();
   let inputElement = document.querySelector("#DataList");
   let newCity = inputElement.value;
   inputElement.value = null; // Clear the input field
   inputElement.blur(); // Unfocus the input field
+  fetchCityStats(newCity);
+}
+
+function fetchCityStats(city) {
   //if My location was selected then run navigator
-  if (newCity === "Current location") {
+  if (city === "Current location") {
     navigator.geolocation.getCurrentPosition(handlePosition);
   } else {
-    let _apiUrl = `${API_URL}forecast?query=${newCity}&key=${API_KEY}&units=metric`;
+    let _apiUrl = `${API_URL}forecast?query=${city}&key=${API_KEY}&units=metric`;
     axios.get(_apiUrl).then(updateData);
   }
 }
@@ -105,12 +109,13 @@ function updateData(response) {
 let todayDate = document.querySelector("#today-date");
 todayDate.innerHTML = changeTodayDate();
 
-//fetch current city & temperature
-navigator.geolocation.getCurrentPosition(handlePosition);
+//default page to specific city first while waiting for the user input
+let defaultCity = "Marseille";
+fetchCityStats(defaultCity);
 
 //update city to submitted city
 let formElement = document.querySelector("#input-form");
-formElement.addEventListener("submit", changeCity);
+formElement.addEventListener("submit", fetchCity);
 
 //sort the celcius/farehnheit links
 let colorCelsius = document.querySelector(".units .celsius");
