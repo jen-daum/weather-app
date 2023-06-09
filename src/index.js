@@ -4,29 +4,29 @@ const API_KEY = "ot351f8facfc3d0f699be8054cb84374";
 //update celsius/fahrenheit value and color depending on choice
 function changeUnitsToFahrenheit(event) {
   event.preventDefault();
-  let mainTemp = document.querySelector(".main-temp");
-  let colorCelsius = document.querySelector(".units .celsius");
-  let colorFahrenheit = document.querySelector(".units .fahrenheit");
+  let colorCelsius = document.querySelector("#celsius");
+  let colorFahrenheit = document.querySelector("#fahrenheit");
   colorCelsius.classList.remove("lightened-units");
   colorCelsius.classList.add("darkened-units");
   colorFahrenheit.classList.remove("darkened-units");
   colorFahrenheit.classList.add("lightened-units");
+  convertToFahrenheit();
 }
 
 function changeUnitsToCelsius(event) {
   event.preventDefault();
-  let mainTemp = document.querySelector(".main-temp");
-  let colorCelsius = document.querySelector(".units .celsius");
-  let colorFahrenheit = document.querySelector(".units .fahrenheit");
+  let colorCelsius = document.querySelector("#celsius");
+  let colorFahrenheit = document.querySelector("#fahrenheit");
   colorCelsius.classList.remove("darkened-units");
   colorCelsius.classList.add("lightened-units");
   colorFahrenheit.classList.remove("lightened-units");
   colorFahrenheit.classList.add("darkened-units");
+  convertToCelsius();
 }
 
 function changeTodayDate() {
   let now = new Date();
-  let day = now.getDay();
+  /*   let day = now.getDay(); */
   let fullDays = [
     "Sunday",
     "Monday",
@@ -58,7 +58,6 @@ function fetchCity(event) {
 }
 
 function fetchCityStats(city) {
-  //if My location was selected then run navigator
   if (city === "Current location") {
     navigator.geolocation.getCurrentPosition(handlePosition);
   } else {
@@ -82,14 +81,18 @@ function updateData(response) {
   //update h1 with city name
   let h1 = document.querySelector("h1");
   h1.innerHTML = response.data.city;
-  //update temperatures
-  let mainTemp = document.querySelector("#mainTemp");
-  let minTemp = document.querySelector(".min-temp");
-  let maxTemp = document.querySelector(".max-temp");
-  mainTemp.innerHTML = Math.round(response.data.daily[1].temperature.day);
-  minTemp.innerHTML = Math.round(response.data.daily[1].temperature.minimum);
-  maxTemp.innerHTML = Math.round(response.data.daily[1].temperature.maximum);
+  //update const temperatures
+  currentCelsiusTemp = response.data.daily[1].temperature.day;
+  currentMinTemp = response.data.daily[1].temperature.minimum;
+  currentMaxTemp = response.data.daily[1].temperature.maximum;
 
+  //---if celsius is selected update in celsius
+  if (document.getElementById("celsius").className === "lightened-units") {
+    convertToCelsius();
+  } else {
+    //---if fahrenheit is selected update in fahrenheit
+    convertToFahrenheit();
+  }
   //update humidity and Wind
   let humidity = document.querySelector("#humidity");
   let wind = document.querySelector("#wind");
@@ -101,8 +104,28 @@ function updateData(response) {
   //update weather sentence
   let sentenceWeather = document.querySelector(".sentence-weather");
   sentenceWeather.innerHTML = capitaliseFirstLetter(
-    response.data.weather[0].description
+    response.data.daily[1].condition.description
   );
+
+  //update forecast
+}
+
+function convertToCelsius() {
+  let mainTemp = document.querySelector("#mainTemp");
+  let minTemp = document.querySelector("#min-temp");
+  let maxTemp = document.querySelector("#max-temp");
+  mainTemp.innerHTML = Math.round(currentCelsiusTemp);
+  minTemp.innerHTML = Math.round(currentMinTemp);
+  maxTemp.innerHTML = Math.round(currentMaxTemp);
+}
+
+function convertToFahrenheit() {
+  let mainTemp = document.querySelector("#mainTemp");
+  let minTemp = document.querySelector("#min-temp");
+  let maxTemp = document.querySelector("#max-temp");
+  mainTemp.innerHTML = Math.round((currentCelsiusTemp * 9) / 5 + 32);
+  minTemp.innerHTML = Math.round((currentMinTemp * 9) / 5 + 32);
+  maxTemp.innerHTML = Math.round((currentMaxTemp * 9) / 5 + 32);
 }
 
 //update block to today's date
@@ -111,6 +134,9 @@ todayDate.innerHTML = changeTodayDate();
 
 //default page to specific city first while waiting for the user input
 let defaultCity = "Marseille";
+let currentCelsiusTemp = null;
+let currentMinTemp = null;
+let currentMaxTemp = null;
 fetchCityStats(defaultCity);
 
 //update city to submitted city
@@ -118,8 +144,8 @@ let formElement = document.querySelector("#input-form");
 formElement.addEventListener("submit", fetchCity);
 
 //sort the celcius/farehnheit links
-let colorCelsius = document.querySelector(".units .celsius");
-let colorFahrenheit = document.querySelector(".units .fahrenheit");
+let colorCelsius = document.querySelector("#celsius");
+let colorFahrenheit = document.querySelector("#fahrenheit");
 colorCelsius.addEventListener("click", changeUnitsToCelsius);
 colorFahrenheit.addEventListener("click", changeUnitsToFahrenheit);
 

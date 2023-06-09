@@ -45,7 +45,7 @@
       <h1>Bruxelles</h1>
       <div class="row today-data">
         <div id="today-date" class="col today-date"></div>
-        <div class="col-span-2 main-weather-icon">⛈️</div>
+        <div id="today-icon" class="col-span-2">⛈️</div>
         <div class="col today-humidity-wind">
           <ul>
             <li>
@@ -58,51 +58,50 @@
       <div class="row main-temp-block">
         <span id="mainTemp" class="main-temp">9</span
         ><span class="units"
-          ><a href="#" class="celsius lightened-units">°C</a> |
-          <a href="#" class="fahrenheit darkened-units">°F</a></span
+          ><a href="#" id="celsius" class="lightened-units">°C</a> |
+          <a href="#" id="fahrenheit" class="darkened-units">°F</a></span
         >
       </div>
-      <!-- Alt+0176 for ° -->
       <div class="row min-max-container">
-        <span class="min-temp">7</span>
-        <span class="max-temp">12</span>
+        <span id="min-temp">7</span>
+        <span id="max-temp">12</span>
       </div>
       <div class="row sentence-weather">Rain and thunderstorms</div>
       <div class="separator"></div>
       <div class="row next-day-container">
         <div class="col next-day-item">
           <ul>
-            <li class="next-day-day day-plus-two">Tue</li>
-            <li class="next-day-icon day-plus-two">🌦️</li>
-            <li class="next-day-date day-plus-two">16/05</li>
+            <li id="day1" class="next-day-day">Tue</li>
+            <li id="icon1" class="next-day-icon">🌦️</li>
+            <li id="date1" class="next-day-date">16/05</li>
           </ul>
         </div>
         <div class="col next-day-item">
           <ul>
-            <li class="next-day-day day-plus-three">Wed</li>
-            <li class="next-day-icon day-plus-three">⛅</li>
-            <li class="next-day-date day-plus-three">17/05</li>
+            <li id="day2" class="next-day-day">Wed</li>
+            <li id="icon2" class="next-day-icon">⛅</li>
+            <li id="date2" class="next-day-date">17/05</li>
           </ul>
         </div>
         <div class="col next-day-item">
           <ul>
-            <li class="next-day-day day-plus-four">Thu</li>
-            <li class="next-day-icon day-plus-four">🌥️</li>
-            <li class="next-day-date day-plus-four">18/05</li>
+            <li id="day3" class="next-day-day">Thu</li>
+            <li id="icon3" class="next-day-icon">🌥️</li>
+            <li id="date3" class="next-day-date">18/05</li>
           </ul>
         </div>
         <div class="col next-day-item">
           <ul>
-            <li class="next-day-day day-plus-five">Fri</li>
-            <li class="next-day-icon day-plus-five">⛅</li>
-            <li class="next-day-date day-plus-five">19/05</li>
+            <li id="day4" class="next-day-day">Fri</li>
+            <li id="icon4" class="next-day-icon">⛅</li>
+            <li id="date4" class="next-day-date">19/05</li>
           </ul>
         </div>
         <div class="col next-day-item">
           <ul>
-            <li class="next-day-day day-plus-six">Sat</li>
-            <li class="next-day-icon day-plus-six">☀️</li>
-            <li class="next-day-date day-plus-six">20/05</li>
+            <li id="day5" class="next-day-day">Sat</li>
+            <li id="icon5" class="next-day-icon">☀️</li>
+            <li id="date5" class="next-day-date">20/05</li>
           </ul>
         </div>
       </div>
