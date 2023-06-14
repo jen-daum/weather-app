@@ -2,7 +2,7 @@
 This weather App is a web application made via the SheCodesPlus course that provides real-time weather information for different locations. 
 It allows users to search for weather details of specific cities or view their current location weather. The app displays temperature, humidity, wind speed, and a brief weather description.
 
-![Weather App Screenshot](screenshot.png)
+![Weather App Screenshot](pictures/screenshot.png)
 
 ## Features
 
