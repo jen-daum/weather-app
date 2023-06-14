@@ -20,6 +20,11 @@
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 
     <title>Weather App</title>
+    <link
+      rel="icon"
+      type="image/ico"
+      href="../weather-app/pictures/favicon.ico"
+    />
   </head>
   <body>
     <div class="container">
@@ -45,7 +50,9 @@
       <h1>Bruxelles</h1>
       <div class="row today-data">
         <div id="today-date" class="col today-date"></div>
-        <div id="today-icon" class="col-span-2">⛈️</div>
+        <div class="col-span-2">
+          <img id="today-icon" src="" alt="" />
+        </div>
         <div class="col today-humidity-wind">
           <ul>
             <li>

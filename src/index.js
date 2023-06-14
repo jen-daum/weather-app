@@ -59,20 +59,16 @@ function fetchCity(event) {
 
 function fetchCityStats(city) {
   if (city === "Current location") {
-    navigator.geolocation.getCurrentPosition(handlePosition);
+    navigator.geolocation.getCurrentPosition(retrieveDatafromApi);
   } else {
     let _apiUrl = `${API_URL}forecast?query=${city}&key=${API_KEY}&units=metric`;
     axios.get(_apiUrl).then(updateData);
   }
 }
 
-function handlePosition(position) {
-  let lat = position.coordinates.latitude;
-  let lon = position.coordinates.longitude;
-  retrieveDatafromApi(lat, lon);
-}
-
-function retrieveDatafromApi(lat, lon) {
+function retrieveDatafromApi(position) {
+  let lat = position.coords.latitude;
+  let lon = position.coords.longitude;
   let _apiUrl = `${API_URL}forecast?lon=${lon}&lat=${lat}&key=${API_KEY}&units=metric`;
   axios.get(_apiUrl).then(updateData);
 }
@@ -81,6 +77,7 @@ function updateData(response) {
   //update h1 with city name
   let h1 = document.querySelector("h1");
   h1.innerHTML = response.data.city;
+
   //update const temperatures
   currentCelsiusTemp = response.data.daily[1].temperature.day;
   currentMinTemp = response.data.daily[1].temperature.minimum;
@@ -101,13 +98,17 @@ function updateData(response) {
   )}`;
   wind.innerHTML = `${Math.round(response.data.daily[1].wind.speed)}`;
 
+  //update main weather emote
+  let mainIcon = document.querySelector("#today-icon");
+  mainIcon.setAttribute("src", response.data.daily[1].condition.icon_url);
+
   //update weather sentence
   let sentenceWeather = document.querySelector(".sentence-weather");
   sentenceWeather.innerHTML = capitaliseFirstLetter(
     response.data.daily[1].condition.description
   );
 
-  //update forecast
+  //update forecast(tbc)
 }
 
 function convertToCelsius() {
@@ -149,7 +150,9 @@ let colorFahrenheit = document.querySelector("#fahrenheit");
 colorCelsius.addEventListener("click", changeUnitsToCelsius);
 colorFahrenheit.addEventListener("click", changeUnitsToFahrenheit);
 
-/* const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+/* placeholder for the forecast part
+probably need to do a loop from i=1 to i<6, i++ and call a function that sets the day name, emoticon and date
+ const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const now = new Date(); // Get the current date and time
 const tomorrow = new Date(now); // create a new Date object with the same value as now (it is temporary)

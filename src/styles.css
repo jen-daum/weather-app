@@ -96,7 +96,7 @@ footer {
 
 #today-icon {
   font-size: 60px;
-  padding-left: 30px;
+  padding-left: 10px;
 }
 .main-temp-block {
   display: inline-block;
@@ -123,7 +123,6 @@ footer {
 }
 .row {
   justify-content: space-around;
-  align-items: center;
 }
 .search-bar {
   margin-top: 10px;
@@ -145,6 +144,7 @@ footer {
   color: darkslategrey;
   font-size: 12px;
   font-weight: 300;
+  height: 75px;
 }
 .today-date {
   justify-self: start;
