@@ -28,12 +28,10 @@ h1 {
 }
 
 ul {
-  margin: 0 0;
-  padding: 0 0;
+  padding: 0;
 }
 li {
   list-style-type: none;
-  display: block;
 }
 footer {
   color: black;
@@ -115,12 +113,7 @@ footer {
   display: inline-block;
   font-size: 25px;
 }
-.next-day-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  margin-top: 25px;
-  margin-bottom: 35px;
-}
+
 .row {
   justify-content: space-around;
 }
@@ -135,7 +128,7 @@ footer {
   height: 2px;
   width: 75%;
   background: lightgrey;
-  margin: 0 auto;
+  margin: 0 auto 30px;
 }
 .today-data {
   display: grid;

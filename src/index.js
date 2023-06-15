@@ -108,7 +108,19 @@ function updateData(response) {
     response.data.daily[1].condition.description
   );
 
-  //update forecast(tbc)
+  //update forecast
+  let nextDays = ["Fri", "Sat", "Sun", "Mon", "Tue"];
+  let forecast = document.querySelector("#forecast");
+  forecast.innerHTML = ``;
+  nextDays.forEach(function (day) {
+    forecast.innerHTML += `<div class="col-2">
+              <ul >
+                <li class="next-day-day">${day}</li>
+                <li class="next-day-icon">🌦️</li>
+                <li class="next-day-date">16/05</li>
+              </ul>
+          </div>`;
+  });
 }
 
 function convertToCelsius() {
@@ -149,14 +161,3 @@ let colorCelsius = document.querySelector("#celsius");
 let colorFahrenheit = document.querySelector("#fahrenheit");
 colorCelsius.addEventListener("click", changeUnitsToCelsius);
 colorFahrenheit.addEventListener("click", changeUnitsToFahrenheit);
-
-/* placeholder for the forecast part
-probably need to do a loop from i=1 to i<6, i++ and call a function that sets the day name, emoticon and date
- const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-const now = new Date(); // Get the current date and time
-const tomorrow = new Date(now); // create a new Date object with the same value as now (it is temporary)
-tomorrow.setDate(now.getDate() + 1); // Set the date to tomorrow
-
-const tomorrowIndex = tomorrow.getDay(); // Get the day index (0-6) for tomorrow which should say 4
-const day = days[tomorrowIndex]; // Retrieve the corresponding day from the `days` array, 4 in the Array is Friday */
