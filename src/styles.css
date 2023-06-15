@@ -32,6 +32,7 @@ ul {
 }
 li {
   list-style-type: none;
+  padding: 3px;
 }
 footer {
   color: black;
@@ -48,6 +49,7 @@ footer {
   text-align: center;
   padding: 30px 30px;
   max-width: 530px;
+  min-width: 365px;
   margin-top: 10%;
   font-family: "Noto Sans JP", sans-serif;
   font-size: 14px;
@@ -85,6 +87,10 @@ footer {
 
 .footer-box > *:first-child {
   margin-right: 20px;
+}
+#forecast {
+  font-size: 13px;
+  font-weight: 400;
 }
 
 #github-logo {
@@ -128,7 +134,7 @@ footer {
   height: 2px;
   width: 75%;
   background: lightgrey;
-  margin: 0 auto 30px;
+  margin: 20px auto 50px;
 }
 .today-data {
   display: grid;

@@ -110,14 +110,16 @@ function updateData(response) {
 
   //update forecast
   let nextDays = ["Fri", "Sat", "Sun", "Mon", "Tue"];
+  let nextIcon = ["🌤️", "☀️", "☀️", "🌤️", "☀️"];
+  let nextDate = ["16/06", "17/06", "18/06", "19/06", "20/06"];
   let forecast = document.querySelector("#forecast");
   forecast.innerHTML = ``;
-  nextDays.forEach(function (day) {
+  nextDays.forEach(function (day, index) {
     forecast.innerHTML += `<div class="col-2">
               <ul >
                 <li class="next-day-day">${day}</li>
-                <li class="next-day-icon">🌦️</li>
-                <li class="next-day-date">16/05</li>
+                <li class="next-day-icon">${nextIcon[index]}</li>
+                <li class="next-day-date">${nextDate[index]}</li>
               </ul>
           </div>`;
   });
