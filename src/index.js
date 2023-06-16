@@ -37,10 +37,11 @@ function changeTodayDate() {
     "Saturday",
   ];
 
-  let fullDate = `${fullDays[now.getDay()]} ${now.getHours()}:${(
-    "0" + now.getMinutes()
-  ).slice(-2)}`;
-  //using this slice method to have leading 0 when minutes <10
+  let fullDate = `${fullDays[now.getDay()]} ${now.getDate()}/${(
+    "0" +
+    (now.getMonth() + 1)
+  ).slice(-2)} ${now.getHours()}:${("0" + now.getMinutes()).slice(-2)}`;
+  //using this slice method to have leading 0
   return fullDate;
 }
 
@@ -77,7 +78,7 @@ function formatForecastDates(timestamp) {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   let time = new Date(timestamp * 1000);
   let day = days[time.getDay()];
-  let date = `${time.getDate()}/${time.getMonth() + 1}`;
+  let date = `${time.getDate()}/${("0" + (time.getMonth() + 1)).slice(-2)}`;
   return { day, date };
 }
 
