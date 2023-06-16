@@ -61,16 +61,40 @@ function fetchCityStats(city) {
   if (city === "Current location") {
     navigator.geolocation.getCurrentPosition(retrieveDatafromApi);
   } else {
-    let _apiUrl = `${API_URL}forecast?query=${city}&key=${API_KEY}&units=metric`;
-    axios.get(_apiUrl).then(updateData);
+    let apiCurrentData = `${API_URL}forecast?query=${city}&key=${API_KEY}&units=metric`;
+    axios.get(apiCurrentData).then(updateData);
   }
 }
 
 function retrieveDatafromApi(position) {
   let lat = position.coords.latitude;
   let lon = position.coords.longitude;
-  let _apiUrl = `${API_URL}forecast?lon=${lon}&lat=${lat}&key=${API_KEY}&units=metric`;
-  axios.get(_apiUrl).then(updateData);
+  let apiCurrentData = `${API_URL}forecast?lon=${lon}&lat=${lat}&key=${API_KEY}&units=metric`;
+  axios.get(apiCurrentData).then(updateData);
+}
+
+function formatForecastDates(timestamp) {
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let time = new Date(timestamp * 1000);
+  let day = days[time.getDay()];
+  let date = `${time.getDate()}/${time.getMonth() + 1}`;
+  return { day, date };
+}
+
+function displayForecast(response) {
+  let forecast = document.querySelector("#forecast");
+  forecast.innerHTML = ``;
+
+  for (let index = 1; index < 6; index++) {
+    let { day, date } = formatForecastDates(response.data.daily[index].time);
+    forecast.innerHTML += `<div class="col-2">
+              <ul >
+                <li class="next-day-day">${day}</li>
+                <li class="next-day-icon"><img src="${response.data.daily[index].condition.icon_url}" alt= "${response.data.daily[index].condition.description}" width="45" /></li>
+                <li class="next-day-date">${date}</li>
+              </ul>
+          </div>`;
+  }
 }
 
 function updateData(response) {
@@ -79,9 +103,9 @@ function updateData(response) {
   h1.innerHTML = response.data.city;
 
   //update const temperatures
-  currentCelsiusTemp = response.data.daily[1].temperature.day;
-  currentMinTemp = response.data.daily[1].temperature.minimum;
-  currentMaxTemp = response.data.daily[1].temperature.maximum;
+  currentCelsiusTemp = response.data.daily[0].temperature.day;
+  currentMinTemp = response.data.daily[0].temperature.minimum;
+  currentMaxTemp = response.data.daily[0].temperature.maximum;
 
   //---if celsius is selected update in celsius
   if (document.getElementById("celsius").className === "lightened-units") {
@@ -94,35 +118,22 @@ function updateData(response) {
   let humidity = document.querySelector("#humidity");
   let wind = document.querySelector("#wind");
   humidity.innerHTML = `${Math.round(
-    response.data.daily[1].temperature.humidity
+    response.data.daily[0].temperature.humidity
   )}`;
-  wind.innerHTML = `${Math.round(response.data.daily[1].wind.speed)}`;
+  wind.innerHTML = `${Math.round(response.data.daily[0].wind.speed)}`;
 
   //update main weather emote
   let mainIcon = document.querySelector("#today-icon");
-  mainIcon.setAttribute("src", response.data.daily[1].condition.icon_url);
+  mainIcon.setAttribute("src", response.data.daily[0].condition.icon_url);
 
   //update weather sentence
   let sentenceWeather = document.querySelector(".sentence-weather");
   sentenceWeather.innerHTML = capitaliseFirstLetter(
-    response.data.daily[1].condition.description
+    response.data.daily[0].condition.description
   );
 
   //update forecast
-  let nextDays = ["Fri", "Sat", "Sun", "Mon", "Tue"];
-  let nextIcon = ["🌤️", "☀️", "☀️", "🌤️", "☀️"];
-  let nextDate = ["16/06", "17/06", "18/06", "19/06", "20/06"];
-  let forecast = document.querySelector("#forecast");
-  forecast.innerHTML = ``;
-  nextDays.forEach(function (day, index) {
-    forecast.innerHTML += `<div class="col-2">
-              <ul >
-                <li class="next-day-day">${day}</li>
-                <li class="next-day-icon">${nextIcon[index]}</li>
-                <li class="next-day-date">${nextDate[index]}</li>
-              </ul>
-          </div>`;
-  });
+  displayForecast(response);
 }
 
 function convertToCelsius() {
