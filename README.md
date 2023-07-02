@@ -21,7 +21,7 @@ It allows users to search for weather details of specific cities or view their c
 - Geolocation API (for retrieving current location)
 
 ## Getting Started
-- Visit this website to test it out : https://moonlit-bienenstitch-7d42c1.netlify.app/
+- Visit this website to test it out : https://weather-app-main-jd.netlify.app/
 - Follow these instructions to get a copy of the project up and running (TBC)
 
 ## Usage
